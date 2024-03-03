@@ -1,0 +1,51 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                // Checkout the code from your version control system (e.g., Git)
+                checkout scm
+            }
+        }
+
+        stage('Build and Test') {
+            steps {
+                // Set up your virtual environment and install dependencies
+                script {
+                    sh 'python -m venv venv'
+                    sh 'source venv/bin/activate'
+                    sh 'pip install -r requirements.txt'
+                }
+
+                // Run your Django migrations and tests
+                script {
+                    sh 'python manage.py migrate'
+                    sh 'python manage.py test'
+                }
+            }
+        }
+
+        stage('Docker Build') {
+            steps {
+                // Build Docker image
+                script {
+                    sh 'docker build -t project .'
+                }
+            }
+        }
+
+        stage('Push to Docker Hub') {
+            steps {
+                // Push Docker image to Docker Hub
+                script {
+                    withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
+                        sh 'docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD'
+                        sh 'docker tag your-django-app your-docker-hub-username/project:latest'
+                        sh 'docker push your-docker-hub-username/project:latest'
+                    }
+                }
+            }
+        }
+    }
+}
