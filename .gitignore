@@ -1,0 +1,36 @@
+# Python
+*.pyc
+__pycache__/
+*.pyo
+*.pyd
+*.pyz
+*.pyw
+*.pyc
+*.pyo
+*.pyz
+*.pyw
+*.egg-info/
+dist/
+build/
+*.egg
+*.egg-info
+htmlcov/
+.coverage
+.tox/
+.pytest_cache/
+*.swp
+
+# Flask
+instance/
+*.sqlite
+.env
+
+# VSCode
+.vscode/
+*.code-workspace
+
+# Miscellaneous
+.DS_Store
+Thumbs.db
+env/
+.flaskenv
