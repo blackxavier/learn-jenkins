@@ -2,15 +2,15 @@ pipeline {
     agent { 
         node {
             label 'python'
-            }
-      }
+        }
+    }
     stages {
         stage('Build and Test') {
             steps {
                 // Set up your virtual environment and install dependencies
                 script {
                     sh 'python -m venv venv'
-                    sh 'source venv/bin/activate'
+                    sh './venv/bin/activate'  // Adjusted activation command
                     sh 'pip install -r requirements.txt'
                 }
 
