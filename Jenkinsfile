@@ -8,20 +8,28 @@ pipeline {
         pollSCM '*/1 * * * *'
     }
     stages {
-        stage('Build') {
+        stage('Build and Test') {
             steps {
-                echo "Building.."
-                sh '''
-                echo "doing build stuff.."
-                '''
+                // Set up your virtual environment and install dependencies
+                script {
+                    sh 'python -m venv venv'
+                    sh 'source venv/bin/activate'
+                    sh 'pip install -r requirements.txt'
+                }
+
+                // Run your Django migrations and tests
+                script {
+                    sh 'python manage.py migrate'
+                    sh 'python manage.py test'
+                }
             }
         }
-        stage('Test') {
+        stage('Docker Build') {
             steps {
-                echo "Testing.."
-                sh '''
-                echo "doing test stuff.."
-                '''
+                // Build Docker image
+                script {
+                    sh 'docker build -t project .'
+                }
             }
         }
         stage('Deliver') {
