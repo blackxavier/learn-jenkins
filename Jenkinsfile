@@ -4,9 +4,6 @@ pipeline {
             label 'docker-temp-2'
             }
       }
-    triggers {
-        pollSCM '*/1 * * * *'
-    }
     stages {
         stage('Build and Test') {
             steps {
