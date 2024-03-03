@@ -1,7 +1,7 @@
 pipeline {
     agent { 
         node {
-            label 'docker-temp-21'
+            label 'docker-temp-1'
             }
       }
     stages {
