@@ -1,1 +1,1 @@
-# Learning CI/CD with Jenkins 6
+# Learning CI/CD with Jenkins 7
